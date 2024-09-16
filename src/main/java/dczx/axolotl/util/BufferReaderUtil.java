@@ -20,7 +20,7 @@ public class BufferReaderUtil {
      * @param runnable 代码块
      */
     public static void autoReadLineSync(BufferedReader reader, ParameterRunnable<String> runnable) {
-        ThreadUtil.runSync(() -> {
+        new Thread(() -> {
             String line;
             try {
                 while ((line = reader.readLine()) != null) {
@@ -29,6 +29,6 @@ public class BufferReaderUtil {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }).start();
     }
 }

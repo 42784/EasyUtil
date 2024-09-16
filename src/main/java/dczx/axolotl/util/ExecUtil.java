@@ -47,13 +47,13 @@ public class ExecUtil {
             BufferReaderUtil.autoReadLineSync(errReader, errOutput);
 
         if (exitCode != null)
-            ThreadUtil.runSync(() -> {
+            new Thread(() -> {
                 try {
                     int waitFor = process.waitFor();
                     exitCode.run(waitFor);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-            });
+            }).start();
     }
 }
