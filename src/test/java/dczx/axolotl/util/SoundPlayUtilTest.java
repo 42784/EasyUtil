@@ -18,7 +18,7 @@ class SoundPlayUtilTest {
     @SneakyThrows
     void playerSound() {
         SoundPlayUtil.playerSound("E:\\AxolotlXM工作间\\【编程项目】班级程序\\LessonToolbox(旧)\\LessonToolbox项目\\抽奖音效.mp3");
-//        Thread.sleep(1000);
+        Thread.sleep(3000);
     }
     @Test
     @SneakyThrows
@@ -26,6 +26,6 @@ class SoundPlayUtilTest {
         SoundPlayUtil.playerSound(
                 new FileInputStream("E:\\AxolotlXM工作间\\【编程项目】班级程序\\LessonToolbox(旧)\\LessonToolbox项目\\抽奖音效.mp3")
         );
-//        Thread.sleep(1000);
+        Thread.sleep(3000);
     }
 }

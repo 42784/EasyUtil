@@ -31,6 +31,6 @@ class ExecUtilTest {
                 exitCode -> {
                     System.out.println("exitCode = " + exitCode);
                 });
-//        Thread.sleep(1000);
+        Thread.sleep(1000);
     }
 }
