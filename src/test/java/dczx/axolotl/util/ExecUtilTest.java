@@ -21,7 +21,7 @@ class ExecUtilTest {
     @org.junit.jupiter.api.Test
     @SneakyThrows
     void testExec() {
-        ExecUtil.exec("java -version", System.getProperty("user.dir"),
+        ExecUtil.exec("java -version", System.getProperty("user.dir"),true,
                 output -> {
                     System.out.println("output = " + output);
                 },
