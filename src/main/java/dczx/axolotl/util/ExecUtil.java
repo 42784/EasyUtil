@@ -19,20 +19,22 @@ public class ExecUtil {
      */
     @SneakyThrows
     public static void exec(String command, String runPath) {
-        exec(command, runPath, null, null, null);
+        exec(command, runPath, true, null, null, null);
     }
+
 
     /**
      * 异步运行命令
      *
      * @param command   命令
      * @param runPath   运行路径
+     * @param isBlock   是否阻塞指令执行
      * @param output    标准输出
      * @param errOutput 异常输出
      * @param exitCode  退出码
      */
     @SneakyThrows
-    public static void exec(String command, String runPath,
+    public static void exec(String command, String runPath, boolean isBlock,
                             ParameterRunnable<String> output,
                             ParameterRunnable<String> errOutput,
                             ParameterRunnable<Integer> exitCode) {
@@ -46,14 +48,20 @@ public class ExecUtil {
         if (errOutput != null)
             BufferReaderUtil.autoReadLineSync(errReader, errOutput);
 
-        if (exitCode != null)
-            new Thread(() -> {
+        if (exitCode != null) {
+            Runnable runnable = () -> {
                 try {
                     int waitFor = process.waitFor();
                     exitCode.run(waitFor);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-            }).start();
+            };
+
+            if (isBlock)//是否阻塞线程去执行
+                runnable.run();
+            else
+                new Thread(runnable).start();
+        }
     }
 }
