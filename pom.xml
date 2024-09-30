@@ -6,7 +6,7 @@
 
     <groupId>dczx.axolotl</groupId>
     <artifactId>EasyUtil</artifactId>
-    <version>v1.0</version>
+    <version>1.0.7</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
