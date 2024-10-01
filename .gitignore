@@ -38,3 +38,4 @@ build/
 .DS_Store
 /libs/
 /src/main/java/dczx/axolotl/TODO.java
+/test/
