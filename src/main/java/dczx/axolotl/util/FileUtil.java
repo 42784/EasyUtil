@@ -17,7 +17,7 @@ public class FileUtil {
      * @param fileName 文件名
      */
     @SneakyThrows
-    public static void keepFileExists(String fileName) {
+    public static File keepFileExists(String fileName) {
         File file = new File(fileName);
         File folder = file.getParentFile();
         if (!folder.exists() && !folder.mkdirs()) {
@@ -26,6 +26,8 @@ public class FileUtil {
         if (!file.exists()) {
             file.createNewFile();
         }
+
+        return file;
     }
 
     /**
@@ -35,7 +37,7 @@ public class FileUtil {
      * @param folderName 文件夹名
      */
     @SneakyThrows
-    public static void keepFolderExists(String folderName) {
+    public static File keepFolderExists(String folderName) {
         File file = new File(folderName);
         File folder = file.getParentFile();
         if (!folder.exists() && !folder.mkdirs()) {
@@ -44,5 +46,6 @@ public class FileUtil {
         if (!file.exists() && !file.mkdirs()) {
             file.mkdirs();
         }
+        return file;
     }
 }

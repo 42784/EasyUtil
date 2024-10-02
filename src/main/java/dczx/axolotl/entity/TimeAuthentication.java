@@ -1,11 +1,9 @@
 package dczx.axolotl.entity;
 
 import dczx.axolotl.interfaces.Authentication;
-import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Arrays;
 
 /**
  * @author AxolotlXM
