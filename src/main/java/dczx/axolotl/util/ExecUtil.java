@@ -12,14 +12,26 @@ import java.io.*;
  */
 public class ExecUtil {
     /**
-     * 异步运行命令
+     * 同步运行命令
      *
      * @param command 命令
      * @param runPath 运行路径
      */
     @SneakyThrows
     public static void exec(String command, String runPath) {
-        exec(command, runPath, true, null, null, null);
+        exec(command, runPath, true);
+    }
+
+    /**
+     * 异步运行命令
+     *
+     * @param command 命令
+     * @param runPath 运行路径
+     * @param isBlank 是否阻塞主线程
+     */
+    @SneakyThrows
+    public static void exec(String command, String runPath, boolean isBlank) {
+        exec(command, runPath, isBlank, null, null, null);
     }
 
 
