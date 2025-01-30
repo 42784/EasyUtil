@@ -2,8 +2,11 @@ package dczx.axolotl.util;
 
 import dczx.axolotl.interfaces.ParameterRunnable;
 import lombok.SneakyThrows;
+import sun.nio.ch.ThreadPool;
 
 import java.io.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author AxolotlXM
@@ -76,4 +79,32 @@ public class ExecUtil {
                 new Thread(runnable).start();
         }
     }
+
+    /**
+     * 异步运行命令
+     *
+     * @param command         命令
+     * @param runPath         运行路径
+     * @param executorService 线程池
+     */
+    @SneakyThrows
+    public static void exec(String command, String runPath, ExecutorService executorService) {
+        executorService.submit(() -> exec(command, runPath, true));
+    }
+
+    /**
+     * 异步运行命令
+     *
+     * @param command         命令
+     * @param runPath         运行路径
+     * @param executorService 线程池
+     */
+    @SneakyThrows
+    public static void exec(String command, String runPath, ExecutorService executorService,
+                            ParameterRunnable<String> output,
+                            ParameterRunnable<String> errOutput,
+                            ParameterRunnable<Integer> exitCode) {
+        executorService.submit(() -> exec(command, runPath, true, output, errOutput, exitCode));
+    }
+
 }
