@@ -13,8 +13,9 @@ class DefaultExecutorTest {
 
     @Test
     void runCommand() {
-        DefaultExecutor defaultExecutor = new DefaultExecutor("D:\\");
-        CommandResult result = defaultExecutor.runCommand("cmd /c dir");
+        DefaultExecutor defaultExecutor = new DefaultExecutor("./");
+        CommandResult result = defaultExecutor.runCommand("java -version");
         System.out.println("result.getOut() = " + result.getOut());
+        System.out.println("result.getErr() = " + result.getErr());
     }
 }

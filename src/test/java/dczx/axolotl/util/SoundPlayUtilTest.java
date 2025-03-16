@@ -3,7 +3,8 @@ package dczx.axolotl.util;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,16 +17,17 @@ class SoundPlayUtilTest {
 
     @Test
     @SneakyThrows
-    void playerSound() {
-        SoundPlayUtil.playerSound("E:\\AxolotlXM工作间\\【编程项目】班级程序\\LessonToolbox(旧)\\LessonToolbox项目\\抽奖音效.mp3");
-//        Thread.sleep(3000);
+    void playerSoundA() {
+        SoundPlayUtil.playerSound("./soundTest/bell.mp3");
+//        Thread.sleep(1000);
     }
+
     @Test
     @SneakyThrows
-    void playerSound2() {
+    void playerSoundB() {
         SoundPlayUtil.playerSound(
-                new FileInputStream("E:\\AxolotlXM工作间\\【编程项目】班级程序\\LessonToolbox(旧)\\LessonToolbox项目\\抽奖音效.mp3")
+                Files.newInputStream(Paths.get("./soundTest/bell.mp3"))
         );
-//        Thread.sleep(3000);
+//        Thread.sleep(1000);
     }
 }

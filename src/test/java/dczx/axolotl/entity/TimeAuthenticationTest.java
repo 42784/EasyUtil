@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 2024/9/30 20:29
  */
 class TimeAuthenticationTest {
-    private final TimeAuthentication authentication = new TimeAuthentication("APasswordForThis");
+    private final TimeAuthentication authentication = new TimeAuthentication("Test");
 
     @Test
     void generateToken() {
