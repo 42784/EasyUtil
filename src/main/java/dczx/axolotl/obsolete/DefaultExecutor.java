@@ -1,6 +1,6 @@
-package dczx.axolotl.command;
+package dczx.axolotl.obsolete;
 
-import dczx.axolotl.util.ExecUtil;
+import dczx.axolotl.command.ExecUtil;
 
 import java.util.concurrent.Executors;
 
@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
  * @version 1.0
  * @since 2024/12/14 22:15
  */
+@Deprecated
 public class DefaultExecutor {
     private String path;
 

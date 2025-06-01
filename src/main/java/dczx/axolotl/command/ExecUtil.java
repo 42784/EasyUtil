@@ -1,12 +1,12 @@
-package dczx.axolotl.util;
+package dczx.axolotl.command;
 
-import dczx.axolotl.interfaces.ParameterRunnable;
+import dczx.axolotl.obsolete.ParameterRunnable;
+import dczx.axolotl.util.BufferReaderUtil;
 import lombok.SneakyThrows;
-import sun.nio.ch.ThreadPool;
 
 import java.io.*;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author AxolotlXM
@@ -21,8 +21,8 @@ public class ExecUtil {
      * @param runPath 运行路径
      */
     @SneakyThrows
-    public static void exec(String command, String runPath) {
-        exec(command, runPath, true);
+    public static Process exec(String command, String runPath) {
+        return exec(command, runPath, true);
     }
 
     /**
@@ -33,8 +33,8 @@ public class ExecUtil {
      * @param isBlank 是否阻塞主线程
      */
     @SneakyThrows
-    public static void exec(String command, String runPath, boolean isBlank) {
-        exec(command, runPath, isBlank, null, null, null);
+    public static Process exec(String command, String runPath, boolean isBlank) {
+        return exec(command, runPath, isBlank, null, null, null);
     }
 
 
@@ -49,10 +49,10 @@ public class ExecUtil {
      * @param exitCode  退出码
      */
     @SneakyThrows
-    public static void exec(String command, String runPath, boolean isBlock,
-                            ParameterRunnable<String> output,
-                            ParameterRunnable<String> errOutput,
-                            ParameterRunnable<Integer> exitCode) {
+    public static Process exec(String command, String runPath, boolean isBlock,
+                               ParameterRunnable<String> output,
+                               ParameterRunnable<String> errOutput,
+                               ParameterRunnable<Integer> exitCode) {
         Process process = Runtime.getRuntime().exec(command, null, new File(runPath));
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         BufferedReader errReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
@@ -78,6 +78,7 @@ public class ExecUtil {
             else
                 new Thread(runnable).start();
         }
+        return process;
     }
 
     /**
@@ -88,8 +89,14 @@ public class ExecUtil {
      * @param executorService 线程池
      */
     @SneakyThrows
-    public static void exec(String command, String runPath, ExecutorService executorService) {
-        executorService.submit(() -> exec(command, runPath, true));
+    public static Process exec(String command, String runPath, ExecutorService executorService) {
+        {
+            AtomicReference<Process> exec = new AtomicReference<>();
+            executorService.submit(() -> {
+                exec.set(exec(command, runPath, true));
+            });
+            return exec.get();
+        }
     }
 
     /**
@@ -100,11 +107,16 @@ public class ExecUtil {
      * @param executorService 线程池
      */
     @SneakyThrows
-    public static void exec(String command, String runPath, ExecutorService executorService,
-                            ParameterRunnable<String> output,
-                            ParameterRunnable<String> errOutput,
-                            ParameterRunnable<Integer> exitCode) {
-        executorService.submit(() -> exec(command, runPath, true, output, errOutput, exitCode));
+    public static Process exec(String command, String runPath, ExecutorService
+                                       executorService,
+                               ParameterRunnable<String> output,
+                               ParameterRunnable<String> errOutput,
+                               ParameterRunnable<Integer> exitCode) {
+        AtomicReference<Process> exec = new AtomicReference<>();
+        executorService.submit(() -> {
+            exec.set(exec(command, runPath, true, output, errOutput, exitCode));
+        });
+        return exec.get();
     }
 
 }

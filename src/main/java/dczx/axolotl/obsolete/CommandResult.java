@@ -1,4 +1,4 @@
-package dczx.axolotl.command;
+package dczx.axolotl.obsolete;
 
 import lombok.Data;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * @since 2024/12/14 22:15
  */
 @Data
+@Deprecated
 public class CommandResult {
     private ArrayList<String> out;
     private ArrayList<String> err;

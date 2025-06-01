@@ -1,9 +1,8 @@
 package dczx.axolotl.util;
 
-import dczx.axolotl.interfaces.ParameterRunnable;
+import dczx.axolotl.obsolete.ParameterRunnable;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**

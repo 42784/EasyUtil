@@ -1,8 +1,8 @@
 package dczx.axolotl.command;
 
+import dczx.axolotl.obsolete.CommandResult;
+import dczx.axolotl.obsolete.DefaultExecutor;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author AxolotlXM
