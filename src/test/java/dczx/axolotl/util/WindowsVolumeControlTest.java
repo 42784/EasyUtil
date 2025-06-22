@@ -18,6 +18,6 @@ class WindowsVolumeControlTest {
 
     @Test
     void reduceVolume() {
-        WindowsVolumeControl.reduceVolume(10);
+        WindowsVolumeControl.reduceVolume(30);
     }
 }

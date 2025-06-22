@@ -17,10 +17,12 @@ import lombok.Setter;
  */
 public class WindowsVolumeControl {
     @Setter
-    private static String nircmdPath = "D:\\soundvolumeview-x64";
+    private static String nircmdPath = "I:\\nircmd-x64";
+    @Setter
+    private static String nircmdName = "nircmdc.exe";
 
     public static void setVolume(int volume) {
-        String command = String.format("cmd /c \"nircmd.exe setsysvolume %d\"", (int) (volume * 655.35));
+        String command = String.format("cmd /c \"%s setsysvolume %d\"",nircmdName, (int) (volume * 655.35));
         ExecUtil.exec(
                 command,
                 nircmdPath,
@@ -33,7 +35,7 @@ public class WindowsVolumeControl {
     }
 
     public static void addVolume(double volume) {
-        String command = String.format("cmd /c nircmd.exe changesysvolume %d", (int) (volume));
+        String command = String.format("cmd /c %s changesysvolume %d", nircmdName,(int) (volume));
         ExecUtil.exec(
                 command,
                 nircmdPath
@@ -45,7 +47,7 @@ public class WindowsVolumeControl {
     }
 
     public static void reduceVolume(double volume) {
-        String command = String.format("cmd /c nircmd.exe changesysvolume -%d", (int) (volume));
+        String command = String.format("cmd /c %s changesysvolume -%d", nircmdName,(int) (volume));
         ExecUtil.exec(
                 command,
                 nircmdPath
