@@ -8,7 +8,7 @@ import java.util.Date;
  * @version 1.0
  * @since 2024/9/16 22:46
  */
-public class DataUtil {
+public class DateUtil {
     /**
      * 格式化日期
      *
