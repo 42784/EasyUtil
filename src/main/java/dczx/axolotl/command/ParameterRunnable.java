@@ -1,4 +1,4 @@
-package dczx.axolotl.obsolete;
+package dczx.axolotl.command;
 
 /**
  * @author AxolotlXM

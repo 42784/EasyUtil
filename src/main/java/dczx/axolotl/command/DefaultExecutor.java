@@ -1,6 +1,4 @@
-package dczx.axolotl.obsolete;
-
-import dczx.axolotl.command.ExecUtil;
+package dczx.axolotl.command;
 
 import java.util.concurrent.Executors;
 

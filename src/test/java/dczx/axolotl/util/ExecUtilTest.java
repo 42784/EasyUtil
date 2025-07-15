@@ -1,7 +1,7 @@
 package dczx.axolotl.util;
 
-import dczx.axolotl.obsolete.CommandResult;
-import dczx.axolotl.obsolete.DefaultExecutor;
+import dczx.axolotl.command.CommandResult;
+import dczx.axolotl.command.DefaultExecutor;
 import dczx.axolotl.command.ExecUtil;
 import lombok.SneakyThrows;
 

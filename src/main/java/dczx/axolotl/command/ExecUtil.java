@@ -1,6 +1,5 @@
 package dczx.axolotl.command;
 
-import dczx.axolotl.obsolete.ParameterRunnable;
 import dczx.axolotl.util.BufferReaderUtil;
 import lombok.SneakyThrows;
 

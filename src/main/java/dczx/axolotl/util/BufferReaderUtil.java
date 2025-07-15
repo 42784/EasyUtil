@@ -1,6 +1,6 @@
 package dczx.axolotl.util;
 
-import dczx.axolotl.obsolete.ParameterRunnable;
+import dczx.axolotl.command.ParameterRunnable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
