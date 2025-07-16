@@ -1,6 +1,7 @@
 package dczx.axolotl.terminal;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -46,7 +47,7 @@ public class ProcessTerminal extends SimpleTerminal {
 
     private void readStream(InputStream stream, boolean isError) {
         List<TerminalStringRefresh> refreshListener = getRefreshListener(TerminalStringRefresh.class);
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, System.getProperty("sun.jnu.encoding")))) {
             String line;
             while ((line = reader.readLine()) != null && isRunning.get()) {
                 if (isError) {

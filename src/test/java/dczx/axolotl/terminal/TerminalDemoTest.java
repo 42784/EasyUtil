@@ -3,6 +3,8 @@ package dczx.axolotl.terminal;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
+import java.nio.charset.Charset;
+
 /**
  * @author AxolotlXM
  * @version 1.0
@@ -23,14 +25,15 @@ import org.junit.jupiter.api.Test;
 //        terminal.execute("help");
         terminal.execute("java -version");
 //
-        terminal.execute("java -version");
-        Thread.sleep(100);
+        terminal.execute("java");
+        Thread.sleep(500);
         System.out.println("terminal.isRunning() = " + terminal.isRunning());
         terminal.stop();//下面的已经不会执行了
         System.out.println("terminal.isRunning() = " + terminal.isRunning());
         Thread.sleep(100);
         terminal.execute("java -version");
-        Thread.sleep(500);
+        Thread.sleep(100);
+
 
 
         // 获取全部历史记录
