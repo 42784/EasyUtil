@@ -13,21 +13,22 @@ import org.junit.jupiter.api.Test;
     @Test
     public void RunTest(){
         // 创建终端实例，保留最近5条历史记录
-        ProcessTerminal terminal = new ProcessTerminal(System.getProperty("user.dir"));
+        ProcessTerminal terminal = new ProcessTerminal("cmd.exe",System.getProperty("user.dir"));
 
 
-        terminal.regRefreshListener((TerminalStringRefresh) (output, error) -> System.out.println("output = " + output));
+//        terminal.regRefreshListener((TerminalStringRefresh) (output, error) -> System.out.println("output = " + output));
 
         // 执行多个命令
-        terminal.execute("cmd.exe");
 //        terminal.execute("help");
 //        terminal.execute("java -version");
 //
         terminal.execute("dir");
+        Thread.sleep(50);
         terminal.execute("cd ..");
+        Thread.sleep(5);
         terminal.execute("dir");
 
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
 
         // 获取全部历史记录

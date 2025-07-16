@@ -14,9 +14,8 @@ public class ProcessTerminal extends SimpleTerminal {
     private static final Runtime runtime = Runtime.getRuntime();
 
     private final String workDirectory;
+    private final String startCommand;
     private Process process;
-    private CommandResult commandResult;
-    private OutputStream outputStream;
     private BufferedWriter writer;
     private final AtomicBoolean isRunning = new AtomicBoolean(true);
 
@@ -24,15 +23,17 @@ public class ProcessTerminal extends SimpleTerminal {
         clearRefreshListener();//自己维护历史记录
     }
 
-    public ProcessTerminal(String workDirectory) {
+    public ProcessTerminal(String startCommand, String workDirectory) {
+        this.startCommand = startCommand;
         this.workDirectory = workDirectory;
     }
 
-
-    public ProcessTerminal(int maxHistorySize, String workDirectory) {
+    public ProcessTerminal(int maxHistorySize, String startCommand, String workDirectory) {
         super(maxHistorySize);
+        this.startCommand = startCommand;
         this.workDirectory = workDirectory;
     }
+
 
     private void readStream(InputStream stream, boolean isError) {
         List<TerminalStringRefresh> refreshListener = getRefreshListener(TerminalStringRefresh.class);
@@ -41,11 +42,15 @@ public class ProcessTerminal extends SimpleTerminal {
             while ((line = reader.readLine()) != null && isRunning.get()) {
                 if (isError) {
                     String finalLine = line;
-                    refreshListener.forEach(refresh -> {refresh.refresh(null,finalLine);});
+                    refreshListener.forEach(refresh -> {
+                        refresh.refresh(null, finalLine);
+                    });
                     addHistory(HistoryEntry.Type.ERROR, line);
                 } else {
                     String finalLine = line;
-                    refreshListener.forEach(refresh -> {refresh.refresh(finalLine,null);});
+                    refreshListener.forEach(refresh -> {
+                        refresh.refresh(finalLine, null);
+                    });
                     addHistory(HistoryEntry.Type.OUTPUT, line);
                 }
 
@@ -58,15 +63,8 @@ public class ProcessTerminal extends SimpleTerminal {
     }
 
     private void startInteractiveShell() throws IOException {
-        String os = System.getProperty("os.name").toLowerCase();
         ProcessBuilder builder;
-
-        if (os.contains("win")) {
-            builder = new ProcessBuilder("cmd.exe");
-        } else {
-            builder = new ProcessBuilder("/bin/bash");
-        }
-
+        builder = new ProcessBuilder(startCommand);
         builder.directory(new File(workDirectory));
         builder.redirectErrorStream(false); // 分开处理标准输出和错误输出
 
@@ -100,8 +98,6 @@ public class ProcessTerminal extends SimpleTerminal {
         writer.write(command);
         writer.newLine();
         writer.flush();
-
-        addHistory(HistoryEntry.Type.INPUT, command);
 
         return new CommandResult("", "");
 
