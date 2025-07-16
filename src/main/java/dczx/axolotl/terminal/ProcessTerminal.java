@@ -17,7 +17,16 @@ public class ProcessTerminal extends SimpleTerminal {
     private final String startCommand;
     private Process process;
     private BufferedWriter writer;
+
+    private Thread outputThread;
+    private Thread errorThread;
+    private Thread inputThread;
+
     private final AtomicBoolean isRunning = new AtomicBoolean(true);
+
+    public boolean isRunning() {
+        return isRunning.get();
+    }
 
     {
         clearRefreshListener();//自己维护历史记录
@@ -73,20 +82,25 @@ public class ProcessTerminal extends SimpleTerminal {
         writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 
         // 读取标准输出流
-        new Thread(() -> readStream(process.getInputStream(), false)).start();
+        errorThread = new Thread(() -> readStream(process.getInputStream(), false));
         // 读取错误流
-        new Thread(() -> readStream(process.getErrorStream(), true)).start();
+        outputThread = new Thread(() -> readStream(process.getErrorStream(), true));
 
         // 监听进程是否结束
-        new Thread(() -> {
+        inputThread = new Thread(() -> {
             try {
                 process.waitFor();
                 isRunning.set(false);
                 writer.close();
+                System.out.println("builder = " + builder);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+
+        outputThread.start();
+        errorThread.start();
+        inputThread.start();
     }
 
     @Override
@@ -101,6 +115,15 @@ public class ProcessTerminal extends SimpleTerminal {
 
         return new CommandResult("", "");
 
+    }
+
+    @Override
+    public void stop() {
+        process.destroy();
+        isRunning.set(false);
+        outputThread.interrupt();
+        errorThread.interrupt();
+        inputThread.interrupt();
     }
 
 }

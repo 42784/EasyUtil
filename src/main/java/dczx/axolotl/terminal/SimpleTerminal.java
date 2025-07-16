@@ -27,7 +27,7 @@ public abstract class SimpleTerminal {
                 String output = readStreamSafely(outputStream);
                 String error = readStreamSafely(errorStream);
 
-                if (!output.isEmpty()){
+                if (!output.isEmpty()) {
                     addHistory(HistoryEntry.Type.OUTPUT, output);
                 }
                 if (!error.isEmpty()) {
@@ -101,7 +101,8 @@ public abstract class SimpleTerminal {
     public void clearRefreshListener() {
         refreshListener.clear();
     }
-    public <T extends TerminalRefresh> List<T > getRefreshListener(Class<T > type) {
+
+    public <T extends TerminalRefresh> List<T> getRefreshListener(Class<T> type) {
         List<T> result = new ArrayList<>();
         for (TerminalRefresh listener : refreshListener) {
             if (type.isInstance(listener)) {
@@ -173,12 +174,7 @@ public abstract class SimpleTerminal {
         return result;
     }
 
-    /**
-     * 清空历史记录
-     */
-    public void clearHistory() {
-        history.clear();
-    }
+    public abstract void stop();
 
     /**
      * 历史记录条目

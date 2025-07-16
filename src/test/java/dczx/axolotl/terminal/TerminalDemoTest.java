@@ -16,18 +16,20 @@ import org.junit.jupiter.api.Test;
         ProcessTerminal terminal = new ProcessTerminal("cmd.exe",System.getProperty("user.dir"));
 
 
-//        terminal.regRefreshListener((TerminalStringRefresh) (output, error) -> System.out.println("output = " + output));
+        terminal.regRefreshListener((TerminalStringRefresh) (output, error) -> System.out.println("output = " + output));
+        terminal.regRefreshListener((TerminalStringRefresh) (output, error) -> System.out.println("error = " + error));
 
         // 执行多个命令
 //        terminal.execute("help");
-//        terminal.execute("java -version");
+        terminal.execute("java -version");
 //
-        terminal.execute("dir");
-        Thread.sleep(50);
-        terminal.execute("cd ..");
-        Thread.sleep(5);
-        terminal.execute("dir");
-
+        terminal.execute("java -version");
+        Thread.sleep(100);
+        System.out.println("terminal.isRunning() = " + terminal.isRunning());
+        terminal.stop();//下面的已经不会执行了
+        System.out.println("terminal.isRunning() = " + terminal.isRunning());
+        Thread.sleep(100);
+        terminal.execute("java -version");
         Thread.sleep(500);
 
 
