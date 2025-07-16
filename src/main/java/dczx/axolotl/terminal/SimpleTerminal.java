@@ -27,8 +27,12 @@ public abstract class SimpleTerminal {
                 String output = readStreamSafely(outputStream);
                 String error = readStreamSafely(errorStream);
 
-                if (!output.isEmpty()) addHistory(HistoryEntry.Type.OUTPUT, output);
-                if (!error.isEmpty()) addHistory(HistoryEntry.Type.ERROR, error);
+                if (!output.isEmpty()){
+                    addHistory(HistoryEntry.Type.OUTPUT, output);
+                }
+                if (!error.isEmpty()) {
+                    addHistory(HistoryEntry.Type.ERROR, error);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -97,6 +101,15 @@ public abstract class SimpleTerminal {
     public void clearRefreshListener() {
         refreshListener.clear();
     }
+    public <T extends TerminalRefresh> List<T > getRefreshListener(Class<T > type) {
+        List<T> result = new ArrayList<>();
+        for (TerminalRefresh listener : refreshListener) {
+            if (type.isInstance(listener)) {
+                result.add(type.cast(listener));
+            }
+        }
+        return result;
+    }
 
     /**
      * 执行命令
@@ -127,7 +140,7 @@ public abstract class SimpleTerminal {
     /**
      * 添加历史记录
      */
-    private void addHistory(HistoryEntry.Type type, String content) {
+    void addHistory(HistoryEntry.Type type, String content) {
         if (history.size() >= maxHistorySize) {
             history.remove(0); // 移除最旧的记录
         }

@@ -14,10 +14,21 @@ import org.junit.jupiter.api.Test;
     public void RunTest(){
         // 创建终端实例，保留最近5条历史记录
         ProcessTerminal terminal = new ProcessTerminal(System.getProperty("user.dir"));
+
+
+        terminal.regRefreshListener((TerminalStringRefresh) (output, error) -> System.out.println("output = " + output));
+
         // 执行多个命令
-        terminal.execute("cmd /c");
-        terminal.execute("help");
-        terminal.execute("java -version");
+        terminal.execute("cmd.exe");
+//        terminal.execute("help");
+//        terminal.execute("java -version");
+//
+        terminal.execute("dir");
+        terminal.execute("cd ..");
+        terminal.execute("dir");
+
+        Thread.sleep(1000);
+
 
         // 获取全部历史记录
         System.out.println("Full history:");
