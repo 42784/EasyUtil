@@ -82,7 +82,7 @@ public class ProcessTerminal extends SimpleTerminal {
         builder.directory(new File(workDirectory));
         builder.redirectErrorStream(false); // 分开处理标准输出和错误输出
 
-        process = builder.inheritIO().start();
+        process = builder.start();
         writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 
         // 读取标准输出流
