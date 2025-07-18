@@ -25,7 +25,7 @@ public class ProcessTerminal extends SimpleTerminal {
 
     private final AtomicBoolean isRunning = new AtomicBoolean(true);
 
-    public long getPid(){
+    public long getPid() {
         return process.pid();
     }
 
@@ -143,13 +143,14 @@ public class ProcessTerminal extends SimpleTerminal {
         long pid = process.pid();
         return killProcess(pid);
     }
+
     private boolean killProcess(long pid) {
         try {
             String cmd;
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                cmd = "taskkill /F /T /PID " + pid;
+                cmd = "taskkill /F /PID " + pid;
             } else {
-                cmd = "kill -9 " + pid;
+                cmd = "pkill -P " + pid + " || kill -9 " + pid;
             }
             Process process = Runtime.getRuntime().exec(cmd);
             return process.waitFor() == 0;
