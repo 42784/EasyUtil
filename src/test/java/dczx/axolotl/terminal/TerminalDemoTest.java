@@ -21,8 +21,6 @@ import java.nio.charset.Charset;
         terminal.regRefreshListener((TerminalStringRefresh) (output, error) -> System.out.println("output = " + output));
         terminal.regRefreshListener((TerminalStringRefresh) (output, error) -> System.out.println("error = " + error));
 
-        // 执行多个命令
-//        terminal.execute("help");
         terminal.execute("java -version");
 //
         terminal.execute("java");

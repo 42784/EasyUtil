@@ -18,7 +18,7 @@ class JsonFileDataOperatorTest {
 
     @Test
     public void testLoad() {
-        JsonFileDataOperator jsonFileDataOperator = new JsonFileDataOperator(file, "{\"test\":\"default\"}");
+        JsonFileDataOperator jsonFileDataOperator = new JsonFileDataOperator(file);
         JSONObject jsonObject = jsonFileDataOperator.getJsonObject();
         System.out.println("data = " + jsonObject);
 

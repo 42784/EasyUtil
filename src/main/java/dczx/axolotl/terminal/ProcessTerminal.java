@@ -25,6 +25,10 @@ public class ProcessTerminal extends SimpleTerminal {
 
     private final AtomicBoolean isRunning = new AtomicBoolean(true);
 
+    public long getPid(){
+        return process.pid();
+    }
+
     public boolean isRunning() {
         return isRunning.get();
     }
@@ -79,7 +83,6 @@ public class ProcessTerminal extends SimpleTerminal {
         builder.redirectErrorStream(false); // 分开处理标准输出和错误输出
 
         process = builder.start();
-
         writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 
         // 读取标准输出流
@@ -119,7 +122,7 @@ public class ProcessTerminal extends SimpleTerminal {
 
     @Override
     public void stop() {
-        process.destroy();
+        process.destroyForcibly();
         isRunning.set(false);
         outputThread.interrupt();
         errorThread.interrupt();

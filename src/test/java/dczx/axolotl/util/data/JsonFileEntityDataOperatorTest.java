@@ -17,7 +17,7 @@ class JsonFileEntityDataOperatorTest {
 
     @org.junit.jupiter.api.Test
     public void testLoadAndSaveEntity() {
-        JsonFileEntityDataOperator<TestEntity> operator = new JsonFileEntityDataOperator<>(file, "{\"name\":\"default\",\"age\":0}");
+        JsonFileEntityDataOperator<TestEntity> operator = new JsonFileEntityDataOperator<>(file);
 
         // Load entity
         TestEntity entity = operator.loadEntity(TestEntity.class);
