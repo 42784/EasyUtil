@@ -93,7 +93,6 @@ public class ProcessTerminal extends SimpleTerminal {
                 process.waitFor();
                 isRunning.set(false);
                 writer.close();
-                System.out.println("builder = " + builder);
             } catch (Exception e) {
                 e.printStackTrace();
             }
