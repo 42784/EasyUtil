@@ -133,15 +133,15 @@ public class ProcessTerminal extends SimpleTerminal {
      * 强制停止进程
      * 中断其Pid
      */
-    public boolean stopForcibly() {
+    public void stopForcibly() {
+        long pid = process.pid();
+         killProcess(pid);
+
         process.destroyForcibly();
         isRunning.set(false);
         outputThread.interrupt();
         errorThread.interrupt();
         inputThread.interrupt();
-
-        long pid = process.pid();
-        return killProcess(pid);
     }
 
     private boolean killProcess(long pid) {
