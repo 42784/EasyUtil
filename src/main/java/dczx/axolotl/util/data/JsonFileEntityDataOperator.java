@@ -11,9 +11,6 @@ import java.io.File;
  */
 public class JsonFileEntityDataOperator<T> extends JsonFileDataOperator {
     private T tempEntity;
-    public JsonFileEntityDataOperator(File file, String defaultJsonObjectText) {
-        super(file, defaultJsonObjectText);
-    }
 
     public JsonFileEntityDataOperator(File file) {
         super(file);

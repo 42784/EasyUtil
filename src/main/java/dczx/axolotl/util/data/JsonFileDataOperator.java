@@ -16,16 +16,10 @@ import java.io.File;
 public class JsonFileDataOperator extends AbstractFileDataOperator {
     @Getter
     protected JSONObject jsonObject;
-    @Setter
-    private String defaultJsonObjectText;
+
 
     public JsonFileDataOperator(File file) {
-        this(file,"{}");
-    }
-
-    public JsonFileDataOperator(File file, String defaultJsonObjectText) {
         super(file);
-        this.defaultJsonObjectText = defaultJsonObjectText;
 
         jsonObject = JSONObject.parse(text);
         if (jsonObject == null||jsonObject.toString().isEmpty()) {
@@ -35,7 +29,7 @@ public class JsonFileDataOperator extends AbstractFileDataOperator {
 
     @Override
     public void reset() {
-        jsonObject = JSONObject.parse(defaultJsonObjectText);
+        jsonObject = JSONObject.parse("{}");
         save();
     }
 
