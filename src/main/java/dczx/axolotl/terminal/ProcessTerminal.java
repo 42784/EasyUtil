@@ -129,4 +129,33 @@ public class ProcessTerminal extends SimpleTerminal {
         inputThread.interrupt();
     }
 
+    /**
+     * 强制停止进程
+     * 中断其Pid
+     */
+    public boolean stopForcibly() {
+        process.destroyForcibly();
+        isRunning.set(false);
+        outputThread.interrupt();
+        errorThread.interrupt();
+        inputThread.interrupt();
+
+        long pid = process.pid();
+        return killProcess(pid);
+    }
+    private boolean killProcess(long pid) {
+        try {
+            String cmd;
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                cmd = "taskkill /F /PID " + pid;
+            } else {
+                cmd = "kill -9 " + pid;
+            }
+            Process process = Runtime.getRuntime().exec(cmd);
+            return process.waitFor() == 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
