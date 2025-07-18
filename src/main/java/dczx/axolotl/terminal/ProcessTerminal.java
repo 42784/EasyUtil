@@ -82,7 +82,7 @@ public class ProcessTerminal extends SimpleTerminal {
         builder.directory(new File(workDirectory));
         builder.redirectErrorStream(false); // 分开处理标准输出和错误输出
 
-        process = builder.start();
+        process = builder.inheritIO().start();
         writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 
         // 读取标准输出流
@@ -147,7 +147,7 @@ public class ProcessTerminal extends SimpleTerminal {
         try {
             String cmd;
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                cmd = "taskkill /F /PID " + pid;
+                cmd = "taskkill /F /T /PID " + pid;
             } else {
                 cmd = "kill -9 " + pid;
             }
