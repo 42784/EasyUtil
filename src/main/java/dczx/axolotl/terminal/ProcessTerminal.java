@@ -133,9 +133,9 @@ public class ProcessTerminal extends SimpleTerminal {
      * 强制停止进程
      * 中断其Pid
      */
-    public void stopForcibly() {
+    public void stopForcibly(boolean killChild) {
         long pid = process.pid();
-        killProcess(pid,true);
+        killProcess(pid, killChild);
 
         process.destroyForcibly();
         isRunning.set(false);
@@ -144,7 +144,11 @@ public class ProcessTerminal extends SimpleTerminal {
         inputThread.interrupt();
     }
 
-    private void killProcess(long pid, boolean killChild) {
+    public void stopForcibly() {
+        stopForcibly(true);
+    }
+
+    public void killProcess(long pid, boolean killChild) {
         try {
             String cmd;
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
