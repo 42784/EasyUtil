@@ -148,7 +148,7 @@ public class ProcessTerminal extends SimpleTerminal {
         stopForcibly(true);
     }
 
-    public void killProcess(long pid, boolean killChild) {
+    public static void killProcess(long pid, boolean killChild) {
         try {
             String cmd;
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
