@@ -135,7 +135,7 @@ public class ProcessTerminal extends SimpleTerminal {
      */
     public void stopForcibly() {
         long pid = process.pid();
-         killProcess(pid);
+        killProcess(pid,true);
 
         process.destroyForcibly();
         isRunning.set(false);
@@ -144,18 +144,21 @@ public class ProcessTerminal extends SimpleTerminal {
         inputThread.interrupt();
     }
 
-    private boolean killProcess(long pid) {
+    private void killProcess(long pid, boolean killChild) {
         try {
             String cmd;
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
                 cmd = "taskkill /F /PID " + pid;
+                Runtime.getRuntime().exec(cmd).waitFor();
             } else {
-                cmd = "pkill -P " + pid + " || kill -9 " + pid;
+                if (killChild) {
+                    cmd = "pkill -P " + pid;
+                    Runtime.getRuntime().exec(cmd).waitFor();
+                }
+                cmd = "kill -9 " + pid;
+                Runtime.getRuntime().exec(cmd).waitFor();
             }
-            Process process = Runtime.getRuntime().exec(cmd);
-            return process.waitFor() == 0;
-        } catch (Exception e) {
-            return false;
+        } catch (Exception ignored) {
         }
     }
 
