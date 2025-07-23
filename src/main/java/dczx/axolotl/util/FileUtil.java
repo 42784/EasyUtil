@@ -14,6 +14,7 @@ import java.util.List;
  * @version 1.0
  * @since 2024/10/1 19:15
  */
+@Deprecated
 public class FileUtil {
     /**
      * 确保指定文件存在，不存在则创建（包括父目录）
