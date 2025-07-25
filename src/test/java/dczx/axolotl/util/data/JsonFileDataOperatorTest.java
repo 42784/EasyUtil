@@ -1,12 +1,10 @@
 package dczx.axolotl.util.data;
 
 import com.alibaba.fastjson2.JSONObject;
-import dczx.axolotl.util.FileUtil;
+import dczx.axolotl.util.file.FileUtil;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author AxolotlXM

@@ -1,6 +1,6 @@
 package dczx.axolotl.util.data;
 
-import dczx.axolotl.util.FileUtil;
+import dczx.axolotl.util.file.FileUtil;
 
 import java.io.File;
 

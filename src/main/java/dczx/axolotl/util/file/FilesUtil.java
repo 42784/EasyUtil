@@ -1,4 +1,4 @@
-package dczx.axolotl.util;
+package dczx.axolotl.util.file;
 
 
 import java.io.File;
@@ -7,6 +7,8 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author AxolotlXM
@@ -35,6 +37,7 @@ public class FilesUtil {
 
     /**
      * 确保指定文件存在，不存在则创建（包括父目录）
+     *
      * @param filePath 文件路径
      * @return Path 对象
      * @throws IOException 创建失败时抛出
@@ -65,8 +68,10 @@ public class FilesUtil {
         keepFileExists(path); // 调用核心方法
         return path.toFile();
     }
+
     /**
      * 确保指定目录存在，不存在则创建（包括父目录）
+     *
      * @param folderPath 目录路径
      * @return Path 对象
      * @throws IOException 创建失败时抛出
@@ -91,6 +96,7 @@ public class FilesUtil {
 
     /**
      * 复制文件或目录（支持递归复制目录）
+     *
      * @param source 源路径
      * @param target 目标路径
      * @throws IOException 复制失败时抛出
@@ -126,6 +132,7 @@ public class FilesUtil {
 
     /**
      * 获取目录下所有文件（递归）
+     *
      * @param dir 目录路径
      * @return 文件 Path 列表
      * @throws IOException 遍历失败时抛出
@@ -163,6 +170,7 @@ public class FilesUtil {
 
     /**
      * 移动文件或目录
+     *
      * @param source 源路径
      * @param target 目标路径
      * @throws IOException 移动失败时抛出
@@ -181,6 +189,7 @@ public class FilesUtil {
 
     /**
      * 计算文件或目录大小（字节）
+     *
      * @param path 路径
      * @return 大小（字节）
      * @throws IOException 遍历失败时抛出
@@ -207,4 +216,41 @@ public class FilesUtil {
     public static long calculateSize(String path) throws IOException {
         return calculateSize(Paths.get(path));
     }
+
+    /**
+     * 获取文件或目录的基本信息
+     *
+     * @param path 路径
+     * @return FolderDataNoFiles 对象
+     * @throws IOException 获取失败时抛出
+     */
+    public static FolderDataNoFiles getFolderDataNoFiles(Path path) throws IOException {
+        if (!Files.isDirectory(path)) {
+            throw new IllegalArgumentException("路径不是目录: " + path);
+        }
+        // 使用原子类型确保线程安全
+        final AtomicLong size = new AtomicLong(0);
+        final AtomicInteger fileCount = new AtomicInteger(0);
+        final AtomicInteger folderCount = new AtomicInteger(0);
+        Files.walkFileTree(path, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                // 统计目录数量（除了根目录）
+                folderCount.incrementAndGet();
+
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                // 统计文件大小和数量
+                size.addAndGet(attrs.size());
+                fileCount.incrementAndGet();
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        folderCount.decrementAndGet();//-1 因为不计数自身
+        return new FolderDataNoFiles(path, size.get(), fileCount.get(), folderCount.get());
+    }
+
 }

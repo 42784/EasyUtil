@@ -1,11 +1,10 @@
 package dczx.axolotl.util;
 
+import dczx.axolotl.util.file.FileUtil;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author AxolotlXM

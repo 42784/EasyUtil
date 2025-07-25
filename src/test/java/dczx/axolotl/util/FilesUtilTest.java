@@ -1,5 +1,7 @@
 package dczx.axolotl.util;
 
+import dczx.axolotl.util.file.FilesUtil;
+import dczx.axolotl.util.file.FolderDataNoFiles;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
@@ -29,6 +30,18 @@ class FilesUtilTest {
         FilesUtil.createFile("./test/", "test/testFile.txt", false);
 
     }
+
+
+    @Test
+    @SneakyThrows
+    void getFolderDataNoFiles() {
+        Path path = Path.of("./target");
+        FolderDataNoFiles folderData = FilesUtil.getFolderDataNoFiles(path);
+        System.out.println("folderData = " + folderData);
+
+    }
+
+
 
 
     @TempDir
