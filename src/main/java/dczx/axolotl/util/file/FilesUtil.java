@@ -97,6 +97,8 @@ public class FilesUtil {
     /**
      * 复制文件或目录（支持递归复制目录）
      *
+     * 请使用copy("./a/abc.txt", "./b/abc") 或 copy("./a/abc.txt", "./b") 形式调用
+     *
      * @param source 源路径
      * @param target 目标路径
      * @throws IOException 复制失败时抛出
