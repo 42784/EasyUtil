@@ -22,4 +22,19 @@ public class RobotKeyEvent {
         this.withAlt = false;
         this.keyCode = keyCode;
     }
+    public static  RobotKeyEvent of(int keyCode) {
+        return new RobotKeyEvent(keyCode);
+    }
+    public static RobotKeyEvent of(boolean withShift, boolean withCtrl, boolean withAlt, int keyCode) {
+        return new RobotKeyEvent(withShift, withCtrl, withAlt, keyCode);
+    }
+    public static RobotKeyEvent withShift( int keyCode) {
+        return new RobotKeyEvent(true,false,false, keyCode);
+    }
+    public static RobotKeyEvent withCtrl( int keyCode) {
+        return new RobotKeyEvent(false,true,false, keyCode);
+    }
+    public static RobotKeyEvent withAlt( int keyCode) {
+        return new RobotKeyEvent(false,false,true, keyCode);
+    }
 }
