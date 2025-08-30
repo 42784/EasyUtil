@@ -1,4 +1,4 @@
-package dczx.axolotl.util;
+package dczx.axolotl.thread;
 
 /**
  * @author AxolotlXM
