@@ -1,7 +1,6 @@
 package dczx.axolotl.util;
 
 import dczx.axolotl.entity.RobotKeyEvent;
-import dczx.axolotl.thread.ThreadUtil;
 import dczx.axolotl.thread.VirtualThreadUtil;
 
 import java.awt.*;
@@ -29,6 +28,7 @@ public class RobotUtil {
         if (event.isWithCtrl()) robot.keyPress(KeyEvent.VK_CONTROL);
         if (event.isWithShift()) robot.keyPress(KeyEvent.VK_SHIFT);
         if (event.isWithAlt()) robot.keyPress(KeyEvent.VK_ALT);
+        if (event.isWithWin()) robot.keyPress(KeyEvent.VK_WINDOWS);
         robot.keyPress(event.getKeyCode());
     }
 
@@ -36,6 +36,7 @@ public class RobotUtil {
         if (event.isWithCtrl()) robot.keyRelease(KeyEvent.VK_CONTROL);
         if (event.isWithShift()) robot.keyRelease(KeyEvent.VK_SHIFT);
         if (event.isWithAlt()) robot.keyRelease(KeyEvent.VK_ALT);
+        if (event.isWithWin()) robot.keyRelease(KeyEvent.VK_WINDOWS);
         robot.keyRelease(event.getKeyCode());
     }
     public static void pressKey(int keycode) {

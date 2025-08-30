@@ -1,9 +1,12 @@
 package dczx.axolotl.util;
 
+import dczx.axolotl.entity.RobotKeyEvent;
+
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.awt.event.KeyEvent;
 
 import static java.lang.Thread.sleep;
 
@@ -56,5 +59,23 @@ public class SystemOperationUtil {
     public static void setClipboard(Transferable transferable) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(transferable, null);//还原剪贴板数据
+    }
+
+    /**
+     * 修改粘贴板的数据
+     */
+    public static void pasteText(String text) {
+        try {
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Transferable defaultClipboard = clipboard.getContents(null);//原始剪贴板数据
+            setClipboard(text);//新数据
+            Thread.sleep(3);
+            RobotUtil.pressAndReleaseKeyEvent(RobotKeyEvent.withCtrl(KeyEvent.VK_V));
+            Thread.sleep(3);
+            setClipboard(defaultClipboard);//还原剪贴板数据
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
