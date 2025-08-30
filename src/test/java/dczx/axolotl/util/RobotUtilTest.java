@@ -30,7 +30,7 @@ class RobotUtilTest {
         ExecutorService executor = VirtualThreadUtil.getExecutor();
         try {
             // 等待所有任务完成
-            if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
                 executor.shutdownNow(); // 超过时间限制则强制关闭
             }
         } catch (InterruptedException e) {
